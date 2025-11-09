@@ -1,126 +1,69 @@
+import PropertyListing from "@/components/PropertyListing";
+import { styles } from "@/styles/_homestyle";
+import { Feather } from "@expo/vector-icons";
 import {
-  Text,
   View,
-  StyleSheet,
+  Text,
+  TextInput,
   Image,
-  ImageBackground,
+  ScrollView,
   Dimensions,
-  TouchableOpacity,
+  TouchableHighlight,
 } from "react-native";
-import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
-import { BACKGROUNDIMAGE } from "@/constants";
+import { FILTERS, SAMPLE_DATA } from "@/constants/data";
 
-export default function Index() {
+const Home = () => {
   return (
-    <SafeAreaProvider>
-      <SafeAreaView style={{ flex: 1 }}>
-        <ImageBackground
-          source={BACKGROUNDIMAGE}
-          style={styles.background}
-          resizeMode="cover"
-        >
-
-          {/* <ImageBackground
-          source={require("@/assets/images/background-image.png")}
-          style={styles.background}
-          resizeMode="cover"
-        > */}
-          <View style={styles.container}>
-            {/* Company Logo */}
-            <View style={styles.companyLogo}>
-              <Image source={require("../assets/images/Logo.png")} />
-              {/* <Image source={require("@/assets/images/Logo.png")} /> */}
-            </View>
-
-            {/* Text Group */}
-            <View style={styles.textGroup}>
-              <Text style={styles.textLarge}>Find your favorite place here</Text>
-              <Text style={styles.textSmall}>The best prices for over 2 </Text>
-              <Text style={styles.textSmall}>million properties worldwide</Text>
-            </View>
-
-
-            {/* Button Group + Bottom Navigation Prompt */}
-            <View style={{ position: "absolute", bottom: 0, width: "100%" }}>
-              <View style={styles.buttonGroup}>
-                <TouchableOpacity style={styles.button}>
-                  <Text style={{ ...styles.textSmall, color: "black" }}>
-                    Join here
-                  </Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity style={styles.transparentButton}>
-                  <Text style={styles.textSmall}>Sign In</Text>
-                </TouchableOpacity>
-              </View>
-
-              <View style={{ alignItems: "center", paddingVertical: 20 }}>
-                <Text style={{ color: "white" }}>Continue to home</Text>
-              </View>
-            </View>
+    <View style={styles.container}>
+      <View style={styles.searchGroup}>
+        <View style={styles.searchFormGroup}>
+          <View style={styles.searchControlGroup}>
+            <Text style={styles.searchFormText}>Where to?</Text>
+            <TextInput
+              style={{ ...styles.searchControl, ...styles.searchFormText }}
+              placeholder="Location . Date . Add guest"
+            />
           </View>
-        </ImageBackground>
-      </SafeAreaView>
-    </SafeAreaProvider>
-  );
-}
+          <View style={styles.searchButton}>
+            <Feather name="search" size={24} color="white" />
+          </View>
+        </View>
+      </View>
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  background: {
-    flex: 1,
-    justifyContent: "center",
-    width: "100%",
-    height: Dimensions.get("window").height,
-  },
-  companyLogo: {
-    width: "100%",
-    alignItems: "center",
-    padding: 20,
-    marginBottom: 50,
-  },
-  textGroup: {
-    alignItems: "center",
-  },
-  textLarge: {
-    color: "white",
-    fontWeight: "800",
-    fontSize: 40,
-    textAlign: "center",
-    marginBottom: 12,
-  },
-  textSmall: {
-    color: "white",
-    fontSize: 18,
-    fontWeight: "200",
-    textAlign: "center",
-  },
-  transparentButton: {
-    borderColor: "white",
-    borderWidth: 2,
-    borderRadius: 40,
-    paddingVertical: 15,
-    paddingHorizontal: 5,
-    alignItems: "center",
-    fontSize: 20,
-    flex: 1,
-  },
-  button: {
-    borderColor: "white",
-    borderWidth: 2,
-    borderRadius: 40,
-    paddingVertical: 15,
-    paddingHorizontal: 5,
-    alignItems: "center",
-    fontSize: 20,
-    backgroundColor: "white",
-    flex: 1,
-  },
-  buttonGroup: {
-    flexDirection: "row",
-    gap: 20,
-    paddingHorizontal: 20,
-  },
-});
+      <View
+        style={{
+          height: 72,
+          backgroundColor: "white",
+        }}
+      >
+        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+          <View style={styles.filterGroup}>
+            {FILTERS.map((filter, index) => (
+              <View style={styles.filterContainer} key={index}>
+                <Image
+                  style={{
+                    flex: 1,
+                  }}
+                  source={require("@/assets/images/mansion.png")}
+                  resizeMode="contain"
+                />
+                <Text>{filter}</Text>
+              </View>
+            ))}
+          </View>
+        </ScrollView>
+      </View>
+
+      <ScrollView style={styles.listingContainer}>
+        <PropertyListing listings={SAMPLE_DATA} />
+        <View style={styles.paginationContainer}>
+          <TouchableHighlight style={styles.showMoreButton}>
+            <Text style={styles.showMoreButtonText}>Show more</Text>
+          </TouchableHighlight>
+        </View>
+      </ScrollView>
+    </View>
+  );
+};
+
+export default Home;
