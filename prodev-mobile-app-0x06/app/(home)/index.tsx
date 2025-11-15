@@ -120,7 +120,7 @@ const Home = () => {
               >
                 <Image
                   className="w-12 h-12 mb-1"
-                  source={require("@/assets/images/mansion.png")}
+                  source={require("@/assets/images/logo.png")}
                   resizeMode="contain"
                 />
                 <Text className="text-gray-700 text-xs">{filter}</Text>
